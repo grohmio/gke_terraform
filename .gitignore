@@ -1,0 +1,26 @@
+# Local gcp service account keys
+.keys/*
+!.keys/.keep
+
+# Local .terraform directories
+**/.terraform/*
+
+# Local terraform plan file
+planfile
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+
+# Ignore override files as they are usually used to override resources locally and so
+# are not checked in
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# MacOS
+.DS_Store

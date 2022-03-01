@@ -9,15 +9,19 @@ variable "gke_password" {
 }
 
 variable "gke_num_nodes" {
-  default     = 2
+  default     = 3
   description = "number of gke nodes"
+}
+
+variable "cluster_region_zone" {
+  description = "region or zone for cluster, if set to region all zones are activated"
 }
 
 # GKE cluster
 resource "google_container_cluster" "primary" {
   name     = "${var.project_id}-gke"
-  location = var.region
-  
+  location = var.cluster_region_zone
+
   # We can't create a cluster with no node pool defined, but we want to only use
   # separately managed node pools. So we create the smallest possible default
   # node pool and immediately delete it.
@@ -31,7 +35,7 @@ resource "google_container_cluster" "primary" {
 # Separately Managed Node Pool
 resource "google_container_node_pool" "primary_nodes" {
   name       = "${google_container_cluster.primary.name}-node-pool"
-  location   = var.region
+  location   = var.cluster_region_zone
   cluster    = google_container_cluster.primary.name
   node_count = var.gke_num_nodes
 
@@ -56,8 +60,8 @@ resource "google_container_node_pool" "primary_nodes" {
 
 
 # # Kubernetes provider
-# # The Terraform Kubernetes Provider configuration below is used as a learning reference only. 
-# # It references the variables and resources provisioned in this file. 
+# # The Terraform Kubernetes Provider configuration below is used as a learning reference only.
+# # It references the variables and resources provisioned in this file.
 # # We recommend you put this in another file -- so you can have a more modular configuration.
 # # https://learn.hashicorp.com/terraform/kubernetes/provision-gke-cluster#optional-configure-terraform-kubernetes-provider
 # # To learn how to schedule deployments and services using the provider, go here: https://learn.hashicorp.com/tutorials/terraform/kubernetes-provider.

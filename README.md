@@ -13,7 +13,7 @@ This steps are mandatory to create a gke cluster in a gcp project.
 ## Setup
 * after creating service account save your key file `*.json` in folder `.keys`
 
-* add credentials to terrafaorm via environment variable
+* add credentials to terrafaorm via environment variable, for use github actions make sure to have `GOOGLE_APPLICATION_CREDENTIALS` as secret
 ```
 export GOOGLE_APPLICATION_CREDENTIALS=*.json
 ```
